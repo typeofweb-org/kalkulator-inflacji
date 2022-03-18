@@ -73,7 +73,10 @@ const Home: NextPage = () => {
                   W tym:
                   <ul className="text-xs text-gray-600 columns-2 mt-1">
                     {gusCategoriesDetails[key].map((text) => (
-                      <li key={text} className="list-item list-disc ml-3">
+                      <li
+                        key={text}
+                        className="list-item list-disc ml-3 first:mt-0"
+                      >
                         {text}
                       </li>
                     ))}
