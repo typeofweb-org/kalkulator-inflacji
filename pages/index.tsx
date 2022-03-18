@@ -35,22 +35,24 @@ const calculateTotalInflationForExpenses = (expenses: WeightsRecord) => {
 };
 
 const Home: NextPage = () => {
-  const { register, watch, formState, reset } = useForm<WeightsRecord>({
-    defaultValues: mapObject(defaultWeights_01_2022, (_key, value) =>
-      round(value * 30, 2)
-    ),
-  });
+  const { register, watch, formState, reset } = useForm<WeightsRecord>();
   const values = watch();
 
   useEffect(() => {
     const formData = getFromStorage();
     if (formData) {
       reset(formData);
+    } else {
+      reset(
+        mapObject(defaultWeights_01_2022, (_key, value) => round(value * 30, 2))
+      );
     }
   }, [reset]);
 
   useEffect(() => {
-    saveToStorage(values);
+    if (entries(values).length > 0) {
+      saveToStorage(values);
+    }
   }, [values]);
 
   const localInflation = calculateTotalInflationForExpenses(values);
