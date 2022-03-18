@@ -8,6 +8,6 @@
 @screen lg {
   .position-near-center {
     transform: translateX(calc(-100% - theme("margin.8")));
-    top: 25vh;
+    top: 15vh;
   }
 }

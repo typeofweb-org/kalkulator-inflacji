@@ -8,8 +8,13 @@ import {
   WeightsRecord,
   gusCategoriesDetails,
 } from "../utils/questions";
-import { formatTotalExpenses, formatInflation } from "../utils/format";
+import {
+  formatMoney,
+  formatInflation,
+  getInflationColor,
+} from "../utils/format";
 import { PLNInput } from "../components/PLNInput";
+import { IncomeInput } from "../components/IncomeInput";
 
 const calculateTotalExpenses = (expenses: WeightsRecord) => {
   const expensesEntries = entries(expenses);
@@ -33,6 +38,8 @@ const Home: NextPage = () => {
       round(value * 30, 2)
     ),
   });
+
+  const localInflation = calculateTotalInflationForExpenses(watch());
 
   return (
     <div className="mt-6 relative max-w-md mx-auto pb-48 px-4">
@@ -74,13 +81,20 @@ const Home: NextPage = () => {
         <p className="text-lg">
           Twoje wydatki:
           <span className="block">
-            {formatTotalExpenses(calculateTotalExpenses(watch()))}
+            {formatMoney(calculateTotalExpenses(watch()))}
           </span>
         </p>
         <p className="text-lg">
-          Twoja inflacja:{" "}
-          {formatInflation(calculateTotalInflationForExpenses(watch()))}
+          Twoja inflacja r/r:{" "}
+          <strong
+            className={`font-bold inline-block text-2xl translate-y-0.5 ${getInflationColor(
+              localInflation
+            )}`}
+          >
+            {formatInflation(localInflation)}
+          </strong>
         </p>
+        <IncomeInput inflation={localInflation} />
       </output>
     </div>
   );
