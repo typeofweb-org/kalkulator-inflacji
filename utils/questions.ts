@@ -153,13 +153,6 @@ function calculateTotalInflation(
 export const calculateTotalInflationForWeights = (weights: WeightsRecord) =>
   calculateTotalInflation(inflation_01_2022, weights);
 
-console.log(
-  `Inflacja to: ${calculateTotalInflation(
-    inflation_01_2022,
-    defaultWeights_01_2022
-  )}%`
-);
-
 assert(
   approximatelyEqual(
     Object.values(defaultWeights_01_2022).reduce((a, b) => a + b),

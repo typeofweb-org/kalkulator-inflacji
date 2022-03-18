@@ -13,7 +13,7 @@ export function assert(
 }
 
 export const entries = <Obj extends Record<keyof any, unknown>>(obj: Obj) =>
-  Object.entries(obj) as [keyof Obj, Obj[keyof Obj]][];
+  Object.entries(obj) as [keyof Obj & string, Obj[keyof Obj]][];
 
 export const fromEntries = <
   Arr extends readonly (readonly [string, unknown])[]
@@ -22,3 +22,14 @@ export const fromEntries = <
 ): Record<Arr[number][0], Arr[number][1]> => {
   return Object.fromEntries(arr) as Record<Arr[number][0], Arr[number][1]>;
 };
+
+export const mapObject = <Obj extends Record<keyof any, unknown>, T>(
+  obj: Obj,
+  fn: (key: keyof Obj, value: Obj[keyof Obj]) => T
+): Record<keyof Obj & string, T> =>
+  fromEntries(
+    entries(obj).map(([key, value]) => [key, fn(key, value)] as const)
+  );
+
+export const round = (num: number, fixed: number) =>
+  Number.parseFloat(num.toFixed(fixed));

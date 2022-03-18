@@ -1,37 +1,24 @@
 import type { NextPage } from "next";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { entries, fromEntries } from "../utils";
+import { entries, fromEntries, mapObject, round } from "../utils/utils";
 import {
   GUSCategories,
   calculateTotalInflationForWeights,
   defaultWeights_01_2022,
   WeightsRecord,
   gusCategoriesDetails,
-} from "../questions";
+} from "../utils/questions";
+import { formatTotalExpenses, formatInflation } from "../utils/format";
+import { PLNInput } from "../components/PLNInput";
 
-const formSchema = yup
-  .object({
-    ...fromEntries(
-      entries(GUSCategories).map(
-        ([key]) => [key, yup.number().min(0).max(100).required()] as const
-      )
-    ),
-  })
-  .required();
-type FormData = yup.InferType<typeof formSchema>;
-
-const calculateTotalExpenses = (expenses: FormData) => {
-  console.log(expenses);
+const calculateTotalExpenses = (expenses: WeightsRecord) => {
   const expensesEntries = entries(expenses);
   return expensesEntries.reduce((acc, [, value]) => acc + value, 0);
 };
 
-const calculateTotalInflationForExpenses = (expenses: FormData) => {
+const calculateTotalInflationForExpenses = (expenses: WeightsRecord) => {
   const expensesEntries = entries(expenses);
   const totalExpenses = calculateTotalExpenses(expenses);
-  console.log(totalExpenses);
   const weights: WeightsRecord = fromEntries(
     expensesEntries.map(
       ([key, value]) => [key, (100 * value) / totalExpenses] as const
@@ -41,55 +28,60 @@ const calculateTotalInflationForExpenses = (expenses: FormData) => {
 };
 
 const Home: NextPage = () => {
-  const { register, watch, formState } = useForm<FormData>({
-    resolver: yupResolver(formSchema),
-    defaultValues: defaultWeights_01_2022,
+  const { register, watch, formState } = useForm<WeightsRecord>({
+    defaultValues: mapObject(defaultWeights_01_2022, (_key, value) =>
+      round(value * 30, 2)
+    ),
   });
 
   return (
-    <div className="mt-6 relative max-w-md mx-auto pb-48">
-      <output className="fixed rounded-lg border px-4 py-3 shadow-lg position-near-center w-60 tabular-nums text-center">
-        <span className="block">
-          Twoje wydatki: {(calculateTotalExpenses(watch()) || 0).toFixed(2)}
-           zł
-        </span>
-        <span className="block">
-          Twoja inflacja:{" "}
-          {(calculateTotalInflationForExpenses(watch()) || 0).toFixed(1)}%
-        </span>
-      </output>
-      <form className="grid grid-cols-1 gap-6">
-        <h2 className="text-2xl font-bold">Twoje miesięczne wydatki na:</h2>
-        {entries(GUSCategories).map(([key, title]) => (
-          <label key={key} className="block text-gray-700">
-            <h3 className="mb-2">{title}</h3>
-            {gusCategoriesDetails[key].length > 0 ? (
-              <div className="text-sm mb-4 mt-2">
-                W tym:{" "}
-                {/* <span className="text-xs text-gray-600">
-                  {gusCategoriesDetails[key].join(", ")}
-                </span> */}
-                <ul className="text-xs text-gray-600 columns-2 mt-1">
-                  {gusCategoriesDetails[key].map((text) => (
-                    <li key={text} className="list-item list-disc ml-3">
-                      {text}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-            <input
-              type="number"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              min={0}
-              {...register(key, { valueAsNumber: true })}
-            />
-            <span role="alert" className="text-red-500 text-sm font-bold">
-              {formState.errors[key]?.message}
-            </span>
-          </label>
-        ))}
+    <div className="mt-6 relative max-w-md mx-auto pb-48 px-4">
+      <form className="grid grid-cols-1 prose prose-xl prose-h1:m-0 prose-h2:m-0 prose-h3:m-0 prose-h1:my-4 prose-h2:my-4 prose-p:mt-0 prose-p:mb-4 prose-h2:text-3xl prose-p:text-base">
+        <h1>Kalkulator inflacji</h1>
+        <p>
+          Na podstawie cen towarów i usług konsumpcyjnych podanych przez
+          stat.gov.pl w lutym 2022 r.
+        </p>
+        <h2>Twoje miesięczne wydatki na:</h2>
+        <div className="grid grid-cols-1 gap-12">
+          {entries(GUSCategories).map(([key, title]) => (
+            <label key={key} className="block text-gray-700">
+              <h3 className="mb-2">{title}</h3>
+              {gusCategoriesDetails[key].length > 0 ? (
+                <div className="text-sm mb-4 mt-2">
+                  W tym:
+                  <ul className="text-xs text-gray-600 columns-2 mt-1">
+                    {gusCategoriesDetails[key].map((text) => (
+                      <li key={text} className="list-item list-disc ml-3">
+                        {text}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              <PLNInput {...register(key, { valueAsNumber: true })} />
+              <span role="alert" className="text-red-500 text-sm font-bold">
+                {formState.errors[key]?.message}
+              </span>
+            </label>
+          ))}
+        </div>
       </form>
+      <output
+        className="lg:fixed mx-auto mt-16 lg:mt-0 rounded-lg border-2 border-green-500 px-4 py-3 shadow-green-100 shadow-lg position-near-center w-60 tabular-nums text-center prose prose-lg prose-p:m-0 prose-p:leading-tight grid grid-cols-1 gap-3"
+        aria-live="polite"
+      >
+        <p className="text-lg">
+          Twoje wydatki:
+          <span className="block">
+            {formatTotalExpenses(calculateTotalExpenses(watch()))}
+          </span>
+        </p>
+        <p className="text-lg">
+          Twoja inflacja:{" "}
+          {formatInflation(calculateTotalInflationForExpenses(watch()))}
+        </p>
+      </output>
     </div>
   );
 };

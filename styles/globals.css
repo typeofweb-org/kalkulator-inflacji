@@ -5,10 +5,9 @@
 .comma-after::after {
   content: ",";
 }
-
-.position-near-center {
-  /* left: 50%; */
-  /* right: 50%; */
-  transform: translateX(calc(-100% - theme("margin.8")));
-  top: 25vh;
+@screen lg {
+  .position-near-center {
+    transform: translateX(calc(-100% - theme("margin.8")));
+    top: 25vh;
+  }
 }
