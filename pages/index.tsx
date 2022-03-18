@@ -15,6 +15,8 @@ import {
 } from "../utils/format";
 import { PLNInput } from "../components/PLNInput";
 import { IncomeInput } from "../components/IncomeInput";
+import { useEffect } from "react";
+import { getFromStorage, saveToStorage } from "../utils/persistence";
 
 const calculateTotalExpenses = (expenses: WeightsRecord) => {
   const expensesEntries = entries(expenses);
@@ -33,13 +35,25 @@ const calculateTotalInflationForExpenses = (expenses: WeightsRecord) => {
 };
 
 const Home: NextPage = () => {
-  const { register, watch, formState } = useForm<WeightsRecord>({
+  const { register, watch, formState, reset } = useForm<WeightsRecord>({
     defaultValues: mapObject(defaultWeights_01_2022, (_key, value) =>
       round(value * 30, 2)
     ),
   });
+  const values = watch();
 
-  const localInflation = calculateTotalInflationForExpenses(watch());
+  useEffect(() => {
+    const formData = getFromStorage();
+    if (formData) {
+      reset(formData);
+    }
+  }, [reset]);
+
+  useEffect(() => {
+    saveToStorage(values);
+  }, [values]);
+
+  const localInflation = calculateTotalInflationForExpenses(values);
 
   return (
     <div className="mt-6 relative max-w-md mx-auto pb-48 px-4">
