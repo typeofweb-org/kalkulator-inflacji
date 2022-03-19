@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import { useForm } from "react-hook-form";
 import { entries, fromEntries, mapObject, round } from "../utils/utils";
 import {
@@ -34,8 +33,8 @@ const calculateTotalInflationForExpenses = (expenses: WeightsRecord) => {
   return calculateTotalInflationForWeights(weights);
 };
 
-const Home: NextPage = () => {
-  const { register, watch, formState, reset } = useForm<WeightsRecord>();
+const Home = () => {
+  const { register, watch, reset } = useForm<WeightsRecord>();
   const values = watch();
 
   useEffect(() => {
@@ -64,6 +63,14 @@ const Home: NextPage = () => {
         <p>
           Na podstawie cen towarów i usług konsumpcyjnych podanych przez
           stat.gov.pl w lutym 2022 r.
+        </p>
+        <p>
+          <a
+            className="text-green-600"
+            href="https://github.com/typeofweb/kalkulator-inflacji"
+          >
+            Edytuj na GitHubie!
+          </a>
         </p>
         <h2>Twoje miesięczne wydatki na:</h2>
         <div className="grid grid-cols-1 gap-12">

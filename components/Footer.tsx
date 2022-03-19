@@ -59,7 +59,7 @@ const navigation: readonly {
 export const Footer = () => {
   return (
     <footer className="bg-white">
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 flex flex-col md:flex-row items-center ustify-between lg:px-8">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between lg:px-8">
         <div className="flex justify-center space-x-6 md:order-2">
           {navigation.map((item) => (
             <a
