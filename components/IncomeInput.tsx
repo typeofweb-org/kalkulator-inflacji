@@ -7,7 +7,7 @@ export const IncomeInput = ({ inflation }: { inflation: number }) => {
   return (
     <p className="text-lg tabular-nums">
       Jeśli miesięcznie zarabiasz…{" "}
-      {(value.toString() + " zł").padEnd("60000 zł".length, " ")}
+      {(value.toString() + " zł").padEnd("99999 zł".length, " ")}
       <label>
         <input
           aria-label="Twoje zarobki w złotówkach"

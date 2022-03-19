@@ -77,7 +77,7 @@ const Home: NextPage = () => {
                     {gusCategoriesDetails[key].map((text) => (
                       <li
                         key={text}
-                        className="list-item list-disc ml-3 first:mt-0"
+                        className="list-item list-disc ml-3 my-0 leading-relaxed"
                       >
                         {text}
                       </li>
@@ -86,9 +86,6 @@ const Home: NextPage = () => {
                 </div>
               ) : null}
               <PLNInput {...register(key, { valueAsNumber: true })} />
-              <span role="alert" className="text-red-500 text-sm font-bold">
-                {formState.errors[key]?.message}
-              </span>
             </label>
           ))}
         </div>
