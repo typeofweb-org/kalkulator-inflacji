@@ -5,6 +5,14 @@
 .comma-after::after {
   content: ",";
 }
+
+html,
+body,
+#__next {
+  min-height: 100%;
+  height: 100%;
+}
+
 @screen lg {
   .position-near-center {
     transform: translateX(calc(-100% - theme("margin.8")));

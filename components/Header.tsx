@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ComponentType } from "react";
 import Logo from "./typeofweb.svg";
 
@@ -56,11 +57,27 @@ const navigation: readonly {
   },
 ];
 
-export const Footer = () => {
+export const Header = () => {
   return (
-    <footer className="bg-white">
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between lg:px-8">
-        <div className="flex justify-center space-x-6 md:order-2">
+    <header>
+      <div className="max-w-7xl mx-auto p-4 sm:px-6 flex flex-col md:flex-row items-center justify-between lg:px-8 gap-4">
+        <div>
+          <a
+            href="https://typeofweb.com"
+            className="text-center text-base text-gray-400"
+          >
+            <Logo className="w-40" />
+          </a>
+        </div>
+        <nav className="flex flex-row gap-4 text-lg">
+          <Link href="/">
+            <a className="text-gray-400 hover:text-gray-500">Kalkulator</a>
+          </Link>
+          <Link href="/about">
+            <a className="text-gray-400 hover:text-gray-500">O projekcie</a>
+          </Link>
+        </nav>
+        <div className="flex justify-center space-x-6 mt-2 md:mt-0">
           {navigation.map((item) => (
             <a
               key={item.name}
@@ -72,15 +89,7 @@ export const Footer = () => {
             </a>
           ))}
         </div>
-        <div className="mt-8 md:mt-0 md:order-1">
-          <a
-            href="https://typeofweb.com"
-            className="text-center text-base text-gray-400"
-          >
-            <Logo className="w-40" />
-          </a>
-        </div>
       </div>
-    </footer>
+    </header>
   );
 };

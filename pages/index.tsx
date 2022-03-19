@@ -57,7 +57,7 @@ const Home = () => {
   const localInflation = calculateTotalInflationForExpenses(values);
 
   return (
-    <div className="mt-6 relative max-w-md mx-auto pb-48 px-4">
+    <div className="mt-6 relative max-w-lg mx-auto pb-48 px-4">
       <form className="grid grid-cols-1 prose prose-xl prose-h1:m-0 prose-h2:m-0 prose-h3:m-0 prose-h1:my-4 prose-h2:my-4 prose-p:mt-0 prose-p:mb-4 prose-h2:text-3xl prose-p:text-base">
         <h1>Kalkulator inflacji</h1>
         <p>
@@ -98,7 +98,7 @@ const Home = () => {
         </div>
       </form>
       <output
-        className="lg:fixed mx-auto mt-16 lg:mt-0 rounded-lg border-2 border-green-500 px-4 py-3 shadow-green-100 shadow-lg position-near-center w-60 tabular-nums text-center prose prose-lg prose-p:m-0 prose-p:leading-tight grid grid-cols-1 gap-3"
+        className="lg:fixed mx-auto mt-16 lg:mt-0 rounded-lg border-2 border-green-500 px-4 py-3 shadow-green-100 shadow-lg position-near-center w-full lg:w-60 tabular-nums text-center prose prose-lg prose-p:m-0 prose-p:leading-tight grid grid-cols-1 gap-3"
         aria-live="polite"
       >
         <p className="text-lg">

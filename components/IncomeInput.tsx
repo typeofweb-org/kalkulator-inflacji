@@ -13,7 +13,7 @@ export const IncomeInput = ({ inflation }: { inflation: number }) => {
           aria-label="Twoje zarobki w złotówkach"
           type="range"
           className="block w-full h-2 rounded-full my-2 bg-blue-300 appearance-none"
-          min={1000}
+          min={2000}
           step={500}
           max={60000}
           value={value}
