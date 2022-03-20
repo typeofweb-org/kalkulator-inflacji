@@ -10,6 +10,18 @@ const nextConfig = {
 
     return config;
   },
+  rewrites: () => {
+    return Promise.resolve([
+      {
+        source: "/js/script.js",
+        destination: "https://plausible.io/js/plausible.outbound-links.js",
+      },
+      {
+        source: "/api/event",
+        destination: "https://plausible.io/api/event",
+      },
+    ]);
+  },
 };
 
 module.exports = nextConfig;

@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Header } from "../components/Header";
+import Script from "next/script";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -33,6 +34,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="https://kalkulator-inflacji.vercel.app/kalkulator_inflacji_og.png"
         />
       </Head>
+      <Script
+        strategy="lazyOnload"
+        data-domain="kalkulator-inflacji.vercel.app"
+        data-api="/api/event"
+        src="/js/script.js"
+      />
       <div className="min-h-full flex  flex-col">
         <Header />
         <main className="flex-1">
