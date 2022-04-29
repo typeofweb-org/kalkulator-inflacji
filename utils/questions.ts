@@ -37,6 +37,21 @@ export const inflation_01_2022: InflationRecord = {
   inneTowaryIUslugi: 105.3,
 };
 
+export const inflation_03_2022: InflationRecord = {
+  zywnoscINapojeBezalkoholowe: 108.5,
+  napojeAlkoholoweIWyrobyTytoniowe: 109.2,
+  odziezIObuwie: 103.3,
+  uzytkowanieMieszkaniaLubDomuINosnikiEnergii: 117.7,
+  wyposazenieMieszkaniaIProwadzenieGospodarstwaDomowego: 107.8,
+  zdrowie: 106.0,
+  transport: 124.1,
+  lacznosc: 103.0,
+  rekreacjaIKultura: 107.4,
+  edukacja: 106.0,
+  restauracjeIHotele: 112.7,
+  inneTowaryIUslugi: 106.2,
+};
+
 export const defaultWeights_01_2022: WeightsRecord = {
   zywnoscINapojeBezalkoholowe: 26.59,
   napojeAlkoholoweIWyrobyTytoniowe: 6.32,
@@ -151,7 +166,7 @@ function calculateTotalInflation(
 }
 
 export const calculateTotalInflationForWeights = (weights: WeightsRecord) =>
-  calculateTotalInflation(inflation_01_2022, weights);
+  calculateTotalInflation(inflation_03_2022, weights);
 
 assert(
   approximatelyEqual(

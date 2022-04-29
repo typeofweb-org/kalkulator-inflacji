@@ -62,7 +62,7 @@ const Home = () => {
         <h1>Kalkulator inflacji</h1>
         <p>
           Na podstawie cen towarów i usług konsumpcyjnych podanych przez
-          stat.gov.pl w lutym 2022 r.
+          stat.gov.pl w marcu 2022 r.
         </p>
         <p>
           <a

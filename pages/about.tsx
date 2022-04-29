@@ -6,9 +6,9 @@ const AboutPage = () => {
         <h2>By Type of Web</h2>
 
         <p>
-          Ceny towarów i usług konsumpcyjnych w lutym 2022 r. w porównaniu
-          z analogicznym miesiącem ub. roku wzrosły o 8,5% (przy wzroście cen
-          usług o – 9,1% i towarów – o 8,3%).
+          Ceny towarów i usług konsumpcyjnych w marcu 2022 r. w porównaniu
+          z analogicznym miesiącem ub. roku wzrosły o 11,0% (przy wzroście cen
+          usług o – 11,6% i towarów – o 9,1%).
         </p>
 
         <p>
